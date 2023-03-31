@@ -17,7 +17,6 @@ var BooksData = []Book{}
 
 func CreateBook(ctx *gin.Context) {
 	var newBook Book 
-	// err := ctx.ShouldBindJSON(&newBook)
 	if err := ctx.ShouldBindJSON(&newBook); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return

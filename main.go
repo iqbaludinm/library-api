@@ -1,11 +1,25 @@
 package main
 
 import (
-	"github.com/iqbaludinm/library-api/routers"
+	"github.com/iqbaludinm/library-api/app"
+	"github.com/iqbaludinm/library-api/config"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
-func main() {
-	var PORT = ":8080"
+func init () {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
 
-	routers.StartServer().Run(PORT)
+	// init postgre db
+	err = config.InitDB()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func main() {
+	app.StartApp()
 }
