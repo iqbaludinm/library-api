@@ -28,7 +28,8 @@ func (h HttpServer) CreateEmployee(c *gin.Context) {
 		helpers.InternalServerError(c, err.Error())
 		return
 	}
-	helpers.OkWithData(c, "Success Add Data!", res)
+	// helpers.OkWithData(c, "Success Add Data!", res)
+	helpers.Ok(c, res)
 }
 
 func (h HttpServer) GetBooks(c *gin.Context) {
@@ -37,7 +38,7 @@ func (h HttpServer) GetBooks(c *gin.Context) {
 		helpers.InternalServerError(c, err.Error())
 		return
 	}
-	
+
 	if res == nil {
 		helpers.OkWithData(c, "Success Retrive All Data", []models.Book{})
 	} else {
@@ -54,10 +55,12 @@ func (h HttpServer) GetBookById(c *gin.Context) {
 
 	res, err := h.app.GetBookById(int64(req))
 	if err != nil {
-		helpers.NotFound(c)
+		helpers.NotFound(c, err.Error())
 		return
 	}
-	helpers.OkWithData(c, "Success Retrive a Data", res)
+	
+	// helpers.OkWithData(c, "Success Retrive a Data", res)
+	helpers.Ok(c, res)
 }
 
 func (h HttpServer) UpdateBook(c *gin.Context) {
@@ -76,35 +79,33 @@ func (h HttpServer) UpdateBook(c *gin.Context) {
 
 	_, e := h.app.GetBookById(int64(param))
 	if e != nil {
-		helpers.NotFound(c)
+		helpers.NotFound(c, e.Error())
 		return
 	}
-	
-	_, er:= h.app.UpdateBook(int64(param), req)
-	if er != nil {
-			helpers.ErrorWithData(c, er)
-			return
-	}
-	helpers.OkWithMessage(c, "Success Updated A Data")
-}
-	
-	func (h HttpServer) DeleteBook(c *gin.Context) {
-		req, err := strconv.Atoi(c.Param("id"))
-		if err != nil {
-			helpers.BadRequest(c, "Bad Parameter", err)
-			return
-		}
-		
-		_, e := h.app.GetBookById(int64(req))
-		if e != nil {
-			helpers.NotFound(c)
-			return
-		}
 
-		_, er := h.app.DeleteBook(int64(req))
-		if er != nil {
-		helpers.NotFound(c)
+	req.ID = param
+
+	res, err := h.app.UpdateBook(req)
+	if err != nil {
+		helpers.ErrorWithData(c, err)
 		return
 	}
-	helpers.OkWithMessage(c, "Success Deleted a Data")
+	helpers.Ok(c, res)
+}
+
+func (h HttpServer) DeleteBook(c *gin.Context) {
+	req, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		helpers.BadRequest(c, "Bad Parameter", err)
+		return
+	}
+
+
+	_, er := h.app.DeleteBook(int64(req))
+	if er != nil {
+		
+		helpers.NotFound(c, er.Error())
+		return
+	}
+	helpers.OkWithMessage(c, "Book deleted successfully")
 }

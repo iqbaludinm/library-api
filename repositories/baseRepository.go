@@ -1,9 +1,14 @@
 package repositories
 
-import "database/sql"
+import (
+	"database/sql"
+
+	"gorm.io/gorm"
+)
 
 type BaseRepository struct {
 	db *sql.DB
+	gorm *gorm.DB
 }
 
 type RepoInterface interface {
@@ -11,6 +16,7 @@ type RepoInterface interface {
 }
 
 // constructor
-func NewRepo(db *sql.DB) *BaseRepository {
-	return &BaseRepository{db: db}
+func NewRepo(gorm *gorm.DB) *BaseRepository {
+	return &BaseRepository{gorm: gorm}
+	// return &BaseRepository{db: db, gorm: gorm}
 }

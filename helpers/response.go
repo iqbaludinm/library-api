@@ -9,8 +9,12 @@ import (
 var (
 	// SUCCESS_GET_ALL_DATA = "Successfully Retrieve All Data"
 	// SUCCESS_GET_DATA = "Successfully Retrieve A Data"
-	ERR_NOT_FOUND = "Data not found!"
+	ErrNotFound = "record not found"
 )
+
+func Ok(c *gin.Context, data interface{}) {
+	c.JSON(http.StatusOK, data)
+}
 
 func OkWithMessage(c *gin.Context, message string) {
 	c.JSON(http.StatusOK, gin.H{
@@ -39,8 +43,8 @@ func BadRequest(c *gin.Context, message string, data ...interface{}) {
 	c.JSON(http.StatusBadRequest, obj)
 }
 
-func NotFound(c *gin.Context) {
-	c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": ERR_NOT_FOUND})
+func NotFound(c *gin.Context, message string) {
+	c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": message})
 }
 
 func InternalServerError(c *gin.Context, message string) {

@@ -10,7 +10,7 @@ type BookService interface {
 	CreateBook(req models.Book) (res models.Book, err error)
 	GetBooks() (res []models.Book, err error)
 	GetBookById(id int64) (res models.Book, err error)
-	UpdateBook(id int64, req models.Book) (res models.Book, err error)
+	UpdateBook(req models.Book) (res models.Book, err error)
 	DeleteBook(id int64) (res models.Book, err error)
 }
 
@@ -38,19 +38,12 @@ func (s *BaseService) GetBooks() (res []models.Book, err error) {
 
 func (s *BaseService) GetBookById(id int64) (res models.Book, err error) {
 	// call repo
-	res, err = s.repo.GetBookById(id)
-	if err != nil {
-		return res, err
-	}
-
-	return res, nil
-
-	// return s.repo.CreateEmployee(req)
+	return s.repo.GetBookById(id)
 }
 
-func (s *BaseService) UpdateBook(id int64, req models.Book) (res models.Book, err error) {
+func (s *BaseService) UpdateBook(req models.Book) (res models.Book, err error) {
 	// call repo
-	res,  err = s.repo.UpdateBook(id, req)
+	res,  err = s.repo.UpdateBook(req)
 	if err != nil {
 		return res, err
 	}

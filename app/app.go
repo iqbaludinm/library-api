@@ -15,7 +15,7 @@ import (
 var router = gin.New()
 
 func StartApp() {
-	repo := repositories.NewRepo(config.PSQL.DB)
+	repo := repositories.NewRepo(config.GORM.DB)
 	service := services.NewService(repo)
 	server := handler.NewHttpServer(service)
 
