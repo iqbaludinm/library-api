@@ -17,8 +17,8 @@ type Book struct {
 	ID        int        `json:"id" gorm:"primaryKey;type:serial"`
 	NameBook  string     `json:"name_book" db:"name_book" validate:"required"`
 	Author    string     `json:"author" db:"author" validate:"required"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
+	CreatedAt time.Time  `json:"created_at" gorm:"type:timestamp without time zone"`
+	UpdatedAt time.Time  `json:"updated_at" gorm:"type:timestamp without time zone"`
 	DeletedAt *time.Time `json:"deleted_at" gorm:"default:null"`
 }
 
