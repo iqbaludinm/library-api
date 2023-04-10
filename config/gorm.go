@@ -7,7 +7,7 @@ import (
 	"github.com/iqbaludinm/library-api/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
+	// "gorm.io/gorm/schema"
 )
 
 type Gorm struct {
@@ -54,10 +54,10 @@ func (g *Gorm) OpenConnection() error {
 
 	// if any schema in my db
 	dbConnection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   "library.",
-			SingularTable: false,
-		},
+		// NamingStrategy: schema.NamingStrategy{
+		// 	TablePrefix:   "library.",
+		// 	SingularTable: false,
+		// },
 	})
 
 	// if without schema

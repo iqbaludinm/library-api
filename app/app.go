@@ -21,7 +21,7 @@ func StartApp() {
 
 	routes.RegisterAPI(router, server)
 
-	port := os.Getenv("APP_PORT")
+	port := os.Getenv("PORT")
 	router.Run(fmt.Sprintf(":%s", port))
 
 }
