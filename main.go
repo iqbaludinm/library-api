@@ -14,13 +14,13 @@ func init () {
 	// }
 
 	// init postgre db
-	// err := config.InitDB()
-	// if err != nil {
-	// 	panic(err)
-	// }
+	err := config.InitDB()
+	if err != nil {
+		panic(err)
+	}
 
 	// init gorm
-	err := config.InitGorm()
+	err = config.InitGorm()
 	if err != nil {
 		panic(err)
 	}
